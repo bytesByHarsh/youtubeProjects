@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtGui import QImage
+from PyQt5.QtCore import QObject, QThread, pyqtSignal
 import sys
 
 import cv2,imutils
@@ -25,6 +26,10 @@ class PaintUI(QtWidgets.QMainWindow):
 		self.saveButton.clicked.connect(self.saveImage)
 		self.thresh1Slider.valueChanged['int'].connect(self.thresholdValue1)
 		self.thresh2Slider.valueChanged['int'].connect(self.thresholdValue2)
+		self.startPaintingButton.clicked.connect(self.initPainting)
+
+		# Thread
+		self.paintThread = None
 
 		self.show()
 
@@ -69,6 +74,14 @@ class PaintUI(QtWidgets.QMainWindow):
 
 	def saveImage(self):
 		cv2.imwrite("test.jpg",self.tmp)
+
+	def initPainting(self):
+		self.paintThread = None
+		def initPaintingThread():
+			self.processImage.startPainting()
+		self.paintThread = QThread()
+		self.paintThread.started.connect(initPaintingThread)
+		self.paintThread.start()
 
 
 

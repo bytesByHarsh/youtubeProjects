@@ -63,3 +63,14 @@ class ProcessImage():
 		# self.sobelxy = cv2.Sobel(src=self.img_blur, ddepth=cv2.CV_64F, dx=1, dy=1, ksize=5) # Combined X
 
 		self.edges = cv2.Canny(image=self.img_blur, threshold1=30, threshold2=50)
+
+	def startPainting(self):
+		print("Starting Painting")
+		
+		pyautogui.moveTo(self.canvas_start_x, self.canvas_start_y)
+
+		rows,cols = self.edges.shape
+		for i in range(rows):
+			for j in range(cols):
+				if(self.edges[i,j]):
+					pyautogui.click(self.canvas_start_x+j, self.canvas_start_y+i)
