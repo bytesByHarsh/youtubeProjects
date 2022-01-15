@@ -5,6 +5,8 @@ import sys
 
 import cv2,imutils
 
+from ProcessImage import ProcessImage
+
 class PaintUI(QtWidgets.QMainWindow):
 	def __init__(self):
 		super(PaintUI,self).__init__() #Call the inherited classes __init__ method
@@ -16,9 +18,11 @@ class PaintUI(QtWidgets.QMainWindow):
 		self.cannyThreshold1 = 0
 		self.cannyThreshold2 = 100
 
+		self.processImage = ProcessImage()
+
 		# Signal and Slots
 		self.loadButton.clicked.connect(self.loadImage)
-		self.saveButton.clicked.connect(self.label.clear)
+		self.saveButton.clicked.connect(self.saveImage)
 		self.thresh1Slider.valueChanged['int'].connect(self.thresholdValue1)
 		self.thresh2Slider.valueChanged['int'].connect(self.thresholdValue2)
 
@@ -32,6 +36,7 @@ class PaintUI(QtWidgets.QMainWindow):
 		if not self.fileName:
 			return
 		self.img = cv2.imread(self.fileName)
+		self.processImage.loadImage(self.img)
 		self.setPhoto(self.img)
 
 	def setPhoto(self,image):
@@ -49,10 +54,21 @@ class PaintUI(QtWidgets.QMainWindow):
 	def thresholdValue1(self,value):
 		self.cannyThreshold1 = value
 		print(f"Thresh 1: {value}")
+		self.update()
 
 	def thresholdValue2(self,value):
 		self.cannyThreshold2 = value
 		print(f"Thresh 2: {value}")
+		self.update()
+
+	def update(self):
+		if not self.fileName:
+			print("Select Image First")
+			return
+		self.setPhoto(self.processImage.refreshImage(self.cannyThreshold1,self.cannyThreshold2))
+
+	def saveImage(self):
+		cv2.imwrite("test.jpg",self.tmp)
 
 
 
