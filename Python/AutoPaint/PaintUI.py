@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, uic, QtCore, QtGui
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QImage
 from PyQt5.QtCore import QObject, QThread, pyqtSignal
 import sys
@@ -76,12 +76,26 @@ class PaintUI(QtWidgets.QMainWindow):
 		cv2.imwrite("test.jpg",self.tmp)
 
 	def initPainting(self):
-		self.paintThread = None
-		def initPaintingThread():
-			self.processImage.startPainting()
-		self.paintThread = QThread()
-		self.paintThread.started.connect(initPaintingThread)
-		self.paintThread.start()
+		msg = QMessageBox()
+		msg.setIcon(QMessageBox.Warning)
+
+		msg.setWindowTitle("Important Information")
+		msg.setText("Automated Painiting is about to start!!!")
+
+		msg.setInformativeText("Make sure Paint app is open and visible. \n\n Select the pencil tool \
+			\nTo stop the code press CTRL + ALT + Del")
+
+		# msg.setDetailedText("To stop the code press CTRL + ALT + Del")
+		msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+		retval = msg.exec_()
+		print ("value of pressed message box button:", retval)
+		if retval==1024:
+			self.paintThread = None
+			def initPaintingThread():
+				self.processImage.startPainting()
+			self.paintThread = QThread()
+			self.paintThread.started.connect(initPaintingThread)
+			self.paintThread.start()
 
 
 
