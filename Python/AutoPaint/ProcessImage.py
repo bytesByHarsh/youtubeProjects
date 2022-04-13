@@ -5,6 +5,11 @@ import cv2
 pyautogui.PAUSE = 0.01
 
 class ProcessImage():
+	"""
+	Image Processing class to find edges and use mouse to draw in paint.
+
+
+	"""
 	def __init__(self):
 		self.canvas_start_ratio_x = 10.0/1920
 		self.canvas_start_ratio_y = 180.0/1080
@@ -23,6 +28,13 @@ class ProcessImage():
 		self.img = None
 
 	def loadImage(self,img):
+		"""
+		Load image in class.
+
+		Input
+		-------------
+		img: Opencv Image
+		"""
 		self.img = img.copy()
 		(self.h,self.w) = self.img.shape[:2]
 
