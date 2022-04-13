@@ -1,6 +1,6 @@
 # Auto Paint
 
-Read the complete tutorial : [www.harshmittal.co.in/tutorials](www.harshmittal.co.in/tutorials)
+Read the complete tutorial : [Blog Link](http://www.harshmittal.co.in/tutorials/Python-Drawing-Automation/)
 
 
 
