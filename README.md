@@ -15,4 +15,6 @@ Checkout the code here : [Code](PyQt)
 
 Blog: http://www.harshmittal.co.in/tutorials/Create-Awesome-GUI-application-in-Python/
 
-## Git
+## Python Text Editor using PyQt
+
+![PyQt Editor Application UI](https://github.com/harshmittal2210/PyCon2023-YLW/blob/master/docs/img/main_ui.png)
